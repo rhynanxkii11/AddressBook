@@ -1,0 +1,80 @@
+﻿@model AddressBook.Models.AddressBookM
+@{
+    ViewData["Title"] = "Update Address Book";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+<div class="container d-flex justify-content-center flex-column w-50">
+    <div>
+        <h3>@ViewData["Title"]?.ToString()</h3>
+        <hr />
+        @if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            <div class="alert alert-danger">
+                <b>Error:</b>
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    </div>
+    
+    <form method="post" action="Edit" class="form-control mt-3" autocomplete="off">
+        <div class="mb-3">
+            <label class="form-label" asp-for="Id"></label>
+            <input type="text" class="form-control" asp-for="Id" readonly />
+        </div>
+        <div class="d-flex justify-content-between flex-lg-wrap">
+            <div class="mb-3">
+                <label class="form-label" asp-for="FirstName"></label>
+                <input type="text" class="form-control" asp-for="FirstName" style="width: 280px;" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="LastName"></label>
+                <input type="text" class="form-control input-responsive" asp-for="LastName" style="width: 280px;" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Address"></label>
+            <input type="text" class="form-control" asp-for="Address" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-between flex-row">
+            <div class="mb-3">
+                <label class="form-label" asp-for="City"></label>
+                <input type="text" class="form-control" asp-for="City" style="width: 280px;" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="Province"></label>
+                <input type="text" class="form-control" asp-for="Province" style="width: 280px;" />
+                <span asp-validation-for="Province" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label" asp-for="ContactNumber"></label>
+            <input type="text" class="form-control" asp-for="ContactNumber" />
+            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Email"></label>
+            <input type="text" class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <div class="text-center">
+                <button type="submit" class="btn btn-success" style="width: 130px;">Update</button>
+                <a asp-controller="AddressBookM" asp-action="Index" class="btn btn-secondary mx-2" style="width: 130px;">
+                    Back
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

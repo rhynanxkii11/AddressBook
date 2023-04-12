@@ -1,0 +1,75 @@
+﻿@model List<AddressBook.Models.AddressBookM>
+@{
+    ViewData["Title"] = "Address Book";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+    var successMessage = TempData["successMessage"]?.ToString();
+}
+
+<h3>
+    @ViewData["Title"]?.ToString()
+</h3>
+<hr />
+@if (!string.IsNullOrWhiteSpace(successMessage))
+{
+    <div class="alert alert-success">
+        <b>Success:</b> @successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <b>Success:</b> @errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<form>
+    <div class="d-flex justify-content-end">
+        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search here..." style="width: 200px;">
+    </div>
+    <button asp-controller="AddressBookM" asp-action="Create" class="btn btn-primary my-2">Create Address Book</button>
+    <table class="table table-responsive table-hover table-bordered" id="mySearchTable">
+        <thead>
+            <tr class="table-active">
+                <th>Id</th>
+                <th>Full Name</th>
+                <th>Complete Address</th>
+                <th>Contact Number</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var ab in Model)
+                {
+                    <tr>
+                        <td>@ab.Id</td>
+                        <td>@ab.FullName</td>
+                        <td>@ab.CompleteAddress</td>
+                        <td>@ab.ContactNumber</td>
+                        <td>@ab.Email</td>
+                        <td>
+                            <div class="btn btn-group">
+                                <a asp-controller="AddressBookM" asp-action="Edit" asp-route-id="@ab.Id" class="btn btn-success">Edit</a>
+                                <a asp-controller="AddressBookM" asp-action="Delete" asp-route-id="@ab.Id" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <div>
+                            No Address book available.
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
